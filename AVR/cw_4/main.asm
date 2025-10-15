@@ -1,0 +1,8 @@
+ldi R20, 100
+ldi R21, 200
+add R20, R21
+bclr 0
+nop
+
+
+
