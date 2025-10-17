@@ -1,6 +1,8 @@
-ldi R20, 100
-ldi R21, 200
-add R20, R21
-
-
-
+         LDI R20, 20
+outloop: LDI R21, 25
+inloop:  NOP
+         DEC R21
+         BRNE inloop
+         DEC R20
+         BRNE outloop
+         RJMP 0
