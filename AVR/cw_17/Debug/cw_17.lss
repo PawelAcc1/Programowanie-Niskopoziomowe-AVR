@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.57  C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_17\main.asm Sat Oct 18 00:48:48 2025
+AVRASM ver. 2.1.57  C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_17\main.asm Sun Oct 19 16:47:39 2025
 
 [builtin](2): Including file 'C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.1175\avrassembler\Include\tn2313def.inc'
                  
@@ -666,17 +666,17 @@ AVRASM ver. 2.1.57  C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomo
                  ; ***** END OF FILE ******************************************************
 000000 e068      
 000001 e05e      mainloop:LDI R21, 14
-000002 e84f      outloop: LDI R20, 143
+000002 e84e      outloop: LDI R20, 142
 000003 0000      inloop:  NOP
 000004 954a               DEC R20
 000005 f7e9               BRNE inloop
-                          /*NOP*/
-000006 955a               DEC R21
-000007 f7d1               BRNE outloop
-000008 0000               NOP
-000009 956a               DEC R22
-00000a f7b1               BRNE mainloop
-00000b cff4               RJMP 0
+000006 0000               NOP
+000007 955a               DEC R21
+000008 f7c9               BRNE outloop
+000009 0000               NOP
+00000a 956a               DEC R22
+00000b f7a9               BRNE mainloop
+00000c cff3               RJMP 0
                  
                           /* 1 + 4*(R20-1) + 3  = 4*R20 = x
                               1+ (x+4)*(R21-1) + x+3 = (x+4)*R21 = (4*R20 + 4)*R21* = 4*(R20+1)*R21 = y */
@@ -716,7 +716,7 @@ clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 clt   :   0
 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 cpi   :   0 
 cpse  :   0 dec   :   3 eor   :   0 icall :   0 ijmp  :   0 in    :   0 
 inc   :   0 ld    :   0 ldd   :   0 ldi   :   3 lds   :   0 lpm   :   0 
-lsl   :   0 lsr   :   0 mov   :   0 movw  :   0 neg   :   0 nop   :   2 
+lsl   :   0 lsr   :   0 mov   :   0 movw  :   0 neg   :   0 nop   :   3 
 or    :   0 ori   :   0 out   :   0 pop   :   0 push  :   0 rcall :   0 
 ret   :   0 reti  :   0 rjmp  :   1 rol   :   0 ror   :   0 sbc   :   0 
 sbci  :   0 sbi   :   0 sbic  :   0 sbis  :   0 sbiw  :   0 sbr   :   0 
@@ -729,7 +729,7 @@ Instructions used: 5 out of 105 (4.8%)
 "ATtiny2313" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000018     24      0     24    2048   1.2%
+[.cseg] 0x000000 0x00001a     26      0     26    2048   1.3%
 [.dseg] 0x000060 0x000060      0      0      0     128   0.0%
 [.eseg] 0x000000 0x000000      0      0      0     128   0.0%
 

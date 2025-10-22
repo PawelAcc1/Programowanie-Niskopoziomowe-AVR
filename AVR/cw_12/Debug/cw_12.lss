@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.57  C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_12\main.asm Thu Oct 16 20:04:00 2025
+AVRASM ver. 2.1.57  C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_12\main.asm Sun Oct 19 16:47:40 2025
 
 [builtin](2): Including file 'C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.1175\avrassembler\Include\tn2313def.inc'
                  
@@ -666,7 +666,7 @@ AVRASM ver. 2.1.57  C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomo
                  ; ***** END OF FILE ******************************************************
 000000 e045      
 000001 954a      loop: DEC R20
-000002 f7f1            BRNE loop
+000002 f7f1            BRNE loop 
 000003 0000            NOP
 000004 0000            NOP
                  
