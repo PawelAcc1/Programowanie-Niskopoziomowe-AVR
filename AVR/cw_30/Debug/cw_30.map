@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.57  C:\Users\student\Desktop\BukowiecPN\Programowanie-Niskopoziomowe-AVR\AVR\cw_29\main.asm Wed Oct 22 11:45:53 2025
+AVRASM ver. 2.1.57  C:\Users\student\Desktop\BukowiecPN\Programowanie-Niskopoziomowe-AVR\AVR\cw_30\main.asm Wed Oct 22 12:22:28 2025
 
 
 EQU  SIGNATURE_000 0000001e
@@ -449,7 +449,7 @@ EQU  ERDYaddr     00000011
 EQU  WDTaddr      00000012
 EQU  INT_VECTORS_SIZE 00000013
 CSEG main         0000000e
-CSEG DelayInMs    00000019
-CSEG mainloop     0000001b
-CSEG DelayOneMs   00000023
-CSEG inloop       00000025
+CSEG DelayInMs    00000023
+CSEG mainloop     00000025
+CSEG DelayOneMs   0000002d
+CSEG inloop       0000002f

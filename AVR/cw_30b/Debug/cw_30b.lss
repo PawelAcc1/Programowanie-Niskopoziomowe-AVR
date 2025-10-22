@@ -1,0 +1,6 @@
+
+AVRASM ver. 2.1.57  C:\Users\student\Desktop\BukowiecPN\Programowanie-Niskopoziomowe-AVR\AVR\cw_30b\main.asm Wed Oct 22 12:58:30 2025
+
+[builtin](2): Including file 'C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.1175\avrassembler\Include\tn2313def.inc'
+C:\Users\student\Desktop\BukowiecPN\Programowanie-Niskopoziomowe-AVR\AVR\cw_30b\main.asm(1): error: DIGITS_P: Unknown instruction or macro
+C:\Users\student\Desktop\BukowiecPN\Programowanie-Niskopoziomowe-AVR\AVR\cw_30b\main.asm(1): error: syntax error, unexpected INTEGER, expecting MNEMONIC or REGISTER or SYMBOL or FUNCTION

@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.57  C:\Users\student\Desktop\BukowiecPN\Programowanie-Niskopoziomowe-AVR\AVR\cw_29\main.asm Wed Oct 22 11:45:53 2025
+AVRASM ver. 2.1.57  C:\Users\student\Desktop\BukowiecPN\Programowanie-Niskopoziomowe-AVR\AVR\cw_30\main.asm Wed Oct 22 12:22:28 2025
 
 [builtin](2): Including file 'C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.1175\avrassembler\Include\tn2313def.inc'
                  
@@ -696,45 +696,55 @@ AVRASM ver. 2.1.57  C:\Users\student\Desktop\BukowiecPN\Programowanie-Niskopozio
 000007 914f      DIR_REG_PORTX R20, $7F, D
                  
 000008 934f
-000009 e042
-00000a bb48
-00000b 914f      STATE_REG_PORTX R20, $02, B
+000009 e34f
+00000a bb42
+00000b 914f      STATE_REG_PORTX R20, $3F, D
                  
 00000c e010
 00000d ef0a      LOAD_CONST R17, R16, 250
                  
                  main:
 00000e 934f
-00000f e34f
-000010 bb42
-000011 914f          STATE_REG_PORTX R20, $3F, D
-000012 d006          RCALL DelayInMs
+00000f e042
+000010 bb48
+000011 914f          STATE_REG_PORTX R20, $02, B
+000012 d010          RCALL DelayInMs
 000013 934f
-000014 e046
-000015 bb42
-000016 914f          STATE_REG_PORTX R20, $06, D
-000017 d001          RCALL DelayInMs
-000018 cff5          RJMP main
+000014 e044
+000015 bb48
+000016 914f          STATE_REG_PORTX R20, $04, B
+000017 d00b          RCALL DelayInMs
+000018 934f
+000019 e048
+00001a bb48
+00001b 914f      	STATE_REG_PORTX R20, $08, B
+00001c d006      	RCALL DelayInMs
+00001d 934f
+00001e e140
+00001f bb48
+000020 914f      	STATE_REG_PORTX R20, $10, B
+000021 d001      	RCALL DelayInMs
+000022 cfeb          RJMP main
                  
                  DelayInMs: 
-000019 2f80               MOV R24, R16
-00001a 2f91               MOV R25, R17
+000023 2f80               MOV R24, R16
+000024 2f91               MOV R25, R17
                  mainloop:
-00001b 939f               PUSH R25
-00001c 938f               PUSH R24																								
-00001d d005               RCALL DelayOneMs         
-00001e 918f               POP R24
-00001f 919f               POP R25
-000020 9701               SBIW R25:R24, 1
-000021 f7c9               BRNE mainloop
-000022 9508               RET
+000025 939f               PUSH R25
+000026 938f               PUSH R24																								
+000027 d005               RCALL DelayOneMs         
+000028 918f               POP R24
+000029 919f               POP R25
+00002a 9701               SBIW R25:R24, 1
+00002b f7c9               BRNE mainloop
+00002c 9508               RET
                  
                  DelayOneMs:
-000023 ec8a               LDI R24, $CA    
-000024 e097               LDI R25, $07
+00002d ec8a               LDI R24, $CA    
+00002e e097               LDI R25, $07
                  inloop:  
-000025 9701               SBIW R25:R24, 1  
-000026 f7f0               BRCC inloop 
+00002f 9701               SBIW R25:R24, 1  
+000030 f7f0               BRCC inloop 
 
 
 RESOURCE USE INFORMATION
@@ -754,7 +764,7 @@ counted separately from r26..r31 here.
 "ATtiny2313" register use summary:
 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 r5 :   0 r6 :   0 r7 :   0 
 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 r13:   0 r14:   0 r15:   0 
-r16:   2 r17:   2 r18:   0 r19:   0 r20:  20 r21:   0 r22:   0 r23:   0 
+r16:   2 r17:   2 r18:   0 r19:   0 r20:  28 r21:   0 r22:   0 r23:   0 
 r24:   6 r25:   6 r26:   0 r27:   0 r28:   0 r29:   0 r30:   0 r31:   0 
 x  :   0 y  :   0 z  :   0 
 Registers used: 5 out of 35 (14.3%)
@@ -769,9 +779,9 @@ brvs  :   0 bset  :   0 bst   :   0 cbi   :   0 cbr   :   0 clc   :   0
 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 clt   :   0 
 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 cpi   :   0 
 cpse  :   0 dec   :   0 eor   :   0 icall :   0 ijmp  :   0 in    :   0 
-inc   :   0 ld    :   0 ldd   :   0 ldi   :   9 lds   :   0 lpm   :   0 
+inc   :   0 ld    :   0 ldd   :   0 ldi   :  11 lds   :   0 lpm   :   0 
 lsl   :   0 lsr   :   0 mov   :   2 movw  :   0 neg   :   0 nop   :   0 
-or    :   0 ori   :   0 out   :   5 pop   :   7 push  :   7 rcall :   3 
+or    :   0 ori   :   0 out   :   7 pop   :   9 push  :   9 rcall :   5 
 ret   :   2 reti  :   0 rjmp  :   1 rol   :   0 ror   :   0 sbc   :   0 
 sbci  :   0 sbi   :   0 sbic  :   0 sbis  :   0 sbiw  :   2 sbr   :   0 
 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 sei   :   0 sen   :   0 
@@ -783,7 +793,7 @@ Instructions used: 11 out of 105 (10.5%)
 "ATtiny2313" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000050     80      0     80    2048   3.9%
+[.cseg] 0x000000 0x000064    100      0    100    2048   4.9%
 [.dseg] 0x000060 0x000060      0      0      0     128   0.0%
 [.eseg] 0x000000 0x000000      0      0      0     128   0.0%
 
