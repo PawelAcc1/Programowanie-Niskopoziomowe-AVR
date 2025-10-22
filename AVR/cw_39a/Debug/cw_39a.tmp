@@ -1,0 +1,33 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.57</VERSION>
+ <DEVICE>"ATtiny2313"</DEVICE>
+ <WORKING_DIR>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_39a\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.1175\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_39a\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.1175\avrassembler\Include\tn2313def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_39a\Debug/cw_39a.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>cw_39a.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>cw_39a.map</FILE>
+  <FILE>cw_39a.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <main><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_39a\main.asm</FILE><LINE>58</LINE></main>
+  <DigitTo7segCode><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_39a\main.asm</FILE><LINE>124</LINE></DigitTo7segCode>
+  <DelayInMs><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_39a\main.asm</FILE><LINE>98</LINE></DelayInMs>
+  <mainloop><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_39a\main.asm</FILE><LINE>103</LINE></mainloop>
+  <DelayOneMs><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_39a\main.asm</FILE><LINE>115</LINE></DelayOneMs>
+  <inloop><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_39a\main.asm</FILE><LINE>118</LINE></inloop>
+  <digit_code><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_39a\main.asm</FILE><LINE>143</LINE></digit_code>
+  <inc_skip><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_39a\main.asm</FILE><LINE>135</LINE></inc_skip>
+ </LABELS>
+</ASSEMBLER_INFO>
