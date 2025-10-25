@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.57  C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_39a\main.asm Thu Oct 23 16:34:11 2025
+AVRASM ver. 2.1.57  C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_46\main.asm Sat Oct 25 22:54:27 2025
 
 
 EQU  SIGNATURE_000 0000001e
@@ -405,10 +405,10 @@ EQU  SPIEN        00000005
 EQU  DWEN         00000006
 EQU  RSTDISBL     00000007
 EQU  SELFPRGEN    00000000
-DEF  XH           r27
-DEF  XL           r26
-DEF  YH           r29
-DEF  YL           r28
+DEF  XH           r17
+DEF  XL           r16
+DEF  YH           r19
+DEF  YL           r18
 DEF  ZH           r31
 DEF  ZL           r30
 EQU  FLASHEND     000003ff
@@ -448,17 +448,43 @@ EQU  USI_OVFaddr  00000010
 EQU  ERDYaddr     00000011
 EQU  WDTaddr      00000012
 EQU  INT_VECTORS_SIZE 00000013
+CSEG main         00000007
+CSEG _timer_isr   00000005
 EQU  DIGITS_P     00000012
 EQU  SEGMENTS_P   00000018
 DEF  DIGIT_0      r2
 DEF  DIGIT_1      r3
 DEF  DIGIT_2      r4
 DEF  DIGIT_3      r5
-CSEG main         00000012
-CSEG DigitTo7segCode 0000004e
-CSEG DelayInMs    0000003b
-CSEG mainloop     0000003f
-CSEG DelayOneMs   00000049
-CSEG inloop       0000004b
-CSEG digit_code   00000059
-CSEG inc_skip     00000055
+DEF  Dig0         r22
+DEF  Dig1         r23
+DEF  Dig2         r24
+DEF  Dig3         r25
+DEF  RL           r16
+DEF  RH           r17
+DEF  QL           r18
+DEF  QH           r19
+DEF  QCtrL        r24
+DEF  QCtrH        r25
+DEF  PulseEdgeCtrL r0
+DEF  PulseEdgeCtrH r1
+DEF  DecCounterCompL r8
+DEF  DecCounterCompH r9
+DEF  DecIncrementAuxReg1 r6
+DEF  DecIncrementAuxReg2 r7
+CSEG mainloop     00000035
+CSEG DigitTo7segCode 0000008b
+CSEG GetSegmentCode 0000009b
+CSEG DelayInMs    00000078
+CSEG update_display 0000006c
+CSEG NumberToDigits 000000a8
+CSEG delayloop    0000007c
+CSEG DelayOneMs   00000086
+CSEG inloop       00000088
+CSEG digit_code   00000096
+CSEG inc_skip1    00000092
+CSEG segment_code 000000a6
+CSEG inc_skip2    000000a2
+CSEG Divider      000000b6
+CSEG loop         000000ba
+CSEG end          000000c1

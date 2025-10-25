@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.57  C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_39a\main.asm Thu Oct 23 16:34:11 2025
+AVRASM ver. 2.1.57  C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_1\main.asm Wed Oct 15 23:36:02 2025
 
 
 EQU  SIGNATURE_000 0000001e
@@ -448,17 +448,3 @@ EQU  USI_OVFaddr  00000010
 EQU  ERDYaddr     00000011
 EQU  WDTaddr      00000012
 EQU  INT_VECTORS_SIZE 00000013
-EQU  DIGITS_P     00000012
-EQU  SEGMENTS_P   00000018
-DEF  DIGIT_0      r2
-DEF  DIGIT_1      r3
-DEF  DIGIT_2      r4
-DEF  DIGIT_3      r5
-CSEG main         00000012
-CSEG DigitTo7segCode 0000004e
-CSEG DelayInMs    0000003b
-CSEG mainloop     0000003f
-CSEG DelayOneMs   00000049
-CSEG inloop       0000004b
-CSEG digit_code   00000059
-CSEG inc_skip     00000055

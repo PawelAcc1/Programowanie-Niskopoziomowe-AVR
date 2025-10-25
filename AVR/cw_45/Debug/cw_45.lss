@@ -1,9 +1,19 @@
 
-AVRASM ver. 2.1.57  C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_39a\main.asm Thu Oct 23 16:34:11 2025
+AVRASM ver. 2.1.57  C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_45\main.asm Sat Oct 25 22:36:52 2025
 
 [builtin](2): Including file 'C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.1175\avrassembler\Include\tn2313def.inc'
+C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_45\main.asm(31): warning: .def: 'XL' redefinition (r26->r16)
+C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_45\main.asm(32): warning: .def: 'XH' redefinition (r27->r17)
+C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_45\main.asm(33): warning: .def: 'YL' redefinition (r28->r18)
+C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_45\main.asm(34): warning: .def: 'YH' redefinition (r29->r19)
+C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_45\main.asm(36): warning: Register r16 already defined by the .DEF directive
+C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_45\main.asm(37): warning: Register r17 already defined by the .DEF directive
+C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_45\main.asm(38): warning: Register r18 already defined by the .DEF directive
+C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_45\main.asm(39): warning: Register r19 already defined by the .DEF directive
+C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_45\main.asm(41): warning: Register r24 already defined by the .DEF directive
+C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_45\main.asm(42): warning: Register r25 already defined by the .DEF directive
                  
-                 /*LABELS FOR PORT REEGISTERS*/
+                 .cseg ; segment pamiêci kodu programu
                  
                  ;***** Created: 2011-02-09 12:04 ******* Source: ATtiny2313.xml **********
                  ;*************************************************************************
@@ -665,15 +675,63 @@ AVRASM ver. 2.1.57  C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomo
                  
                  ; ***** END OF FILE ******************************************************
                  
+                 
+000000 c006      .org 0 rjmp main ; skok po resecie (do programu g³ównego)
+000004 c000      .org OC1Aaddr rjmp _timer_isr ; skok do obs³ugi przerwania timera
+                 
+                 _timer_isr: ; procedura obs³ugi przerwania timera
+                 
+000005 94a3          inc R10 ; jakiœ kod
+000006 9518          reti ; powrót z procedury obs³ugi przerwania (reti zamiast ret)
+                 
+                 /*LABELS FOR PORT REGISTERS*/
                  .equ DIGITS_P = 0x12 ; PORTD
                  .equ SEGMENTS_P	= 0x18 ; PORTB
                  
-                 /*NAME DEFINITIONS FOR DIGIT REGISTERS*/
+                 ///////////////////////////////////////////////////////////
+                 /*                     DEFINITIONS                       */
+                 ///////////////////////////////////////////////////////////
+                 /*DEFINITIONS FOR DIGIT REGISTERS*/
                  .def DIGIT_0 = R2
                  .def DIGIT_1 = R3
                  .def DIGIT_2 = R4
                  .def DIGIT_3 = R5
                  
+                 /*DEFINITIONS FOR NumberToDigits*/
+                 .def Dig0=R22 ; Digits temps
+                 .def Dig1=R23 ;
+                 .def Dig2=R24 ;
+                 .def Dig3=R25 ;
+                 
+                 /*DEFINITIONS FOR Divider SUBROUTINE*/
+                 .def XL=R16 ; divident
+                 .def XH=R17
+                 .def YL=R18 ; divisor
+                 .def YH=R19
+                 ; outputs
+                 .def RL=R16 ; remainder
+                 .def RH=R17
+                 .def QL=R18 ; quotient
+                 .def QH=R19
+                 ; internal
+                 .def QCtrL=R24
+                 .def QCtrH=R25
+                 
+                 /*DEFINITIONS FOR 16 BITS DECADE COUNTER*/
+                 .def PulseEdgeCtrL=R0
+                 .def PulseEdgeCtrH=R1
+                 
+                 /*DEFINITION FOR 16 BIST DECADE COUNTER COMPARE REGISTER R9:R8*/
+                 .def DecCounterCompL=R8
+                 .def DecCounterCompH=R9
+                 
+                 /*DEFINITIONS OF AUXILIARY REGISTER TO INCREMENT DECADE COUNTER*/
+                 .def DecIncrementAuxReg1=R6 ;VALUE OF INCREMENTATION (1)
+                 .def DecIncrementAuxReg2=R7 ;=0 FOR SELF ADDITION
+                 
+                 ///////////////////////////////////////////////////////////
+                 /*                     MACROS                            */
+                 ///////////////////////////////////////////////////////////
                  /*SET DIRECTION FOR PORT*/
                  .macro DIR_REG_PORTX ;@(TEMP_REGISTER), @(REG_STATE), @PORT
                      PUSH @0
@@ -682,10 +740,10 @@ AVRASM ver. 2.1.57  C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomo
                      POP @0
                  .endmacro 
                  
-                 /*SET DISPLAY SEGMENT*/
-                 .macro SET_SEGMENT ;@(TEMP_REGISTER), @(VALUE)
+                 /*SET DISPLAY SEGMENT   */
+                 .macro SET_SEGMENT ;@(TEMP_REGISTER), @(SEGMENT_CODE_REGISTER)
                      PUSH @0
-                     LDI @0, @1
+                     MOV @0, @1
                      OUT SEGMENTS_P, @0
                      POP @0 
                  .endmacro
@@ -701,135 +759,278 @@ AVRASM ver. 2.1.57  C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomo
                      LDI @1, LOW(@2)
                  .endmacro
                  
-                 /***DIGIT REGISTERS***/
-000000 e049      LDI R20, 9
-000001 2e24      MOV DIGIT_0, R20
+                 /*REFRESH DISPLAY*/
+                 .macro SET_DIGIT
+                     PUSH R16
+                     MOV R16, DIGIT_@0
+                     RCALL DigitTo7segCode
+                     DISPLAY_DIGIT R16
                  
-000002 e047      LDI R20, 7
-000003 2e34      MOV DIGIT_1, R20
+                     LDI R16, @0
+                     RCALL GetSegmentCode
+                     SET_SEGMENT R20, R16
+                     POP R16
+                     RCALL DelayInMs
+                 .endmacro
                  
-000004 e044      LDI R20, 4
-000005 2e44      MOV DIGIT_2, R20
+                 ///////////////////////////////////////////////////////////
+                 /*                     MAIN PROGRAM                      */
+                 ///////////////////////////////////////////////////////////
+                 main:
+                 /***SET VALUE OF DIGIT REGISTERS***/
+000007 e040      LDI R20, 0
+000008 2e24      MOV DIGIT_0, R20
                  
-000006 e048      LDI R20, 8
-000007 2e54      MOV DIGIT_3, R20
+000009 e040      LDI R20, 0
+00000a 2e34      MOV DIGIT_1, R20
+                 
+00000b e040      LDI R20, 0
+00000c 2e44      MOV DIGIT_2, R20
+                 
+00000d e040      LDI R20, 0
+00000e 2e54      MOV DIGIT_3, R20
                  
                  /***PORT DIRECTION CONTROL***/
-000008 934f
-000009 e14e
-00000a bb47
-00000b 914f      DIR_REG_PORTX R20, $1E, B
-00000c 934f
-00000d e74f
-00000e bb41
-00000f 914f      DIR_REG_PORTX R20, $7F, D
+00000f 934f
+000010 e14e
+000011 bb47
+000012 914f      DIR_REG_PORTX R20, $1E, B
+000013 934f
+000014 e74f
+000015 bb41
+000016 914f      DIR_REG_PORTX R20, $7F, D
                  
                  /***SET VALUE OF DELAY***/
-000010 e010
-000011 e005      LOAD_CONST R17, R16, 5
+000017 e010
+000018 e002      LOAD_CONST R17, R16, 2
                  
-                 main:
+                 ;TEMP REGISTERS FOR INCREMENTING DECADE COUNTER
+000019 e041      LDI R20, 1
+00001a 2e64      MOV DecIncrementAuxReg1, R20 
+00001b e040      LDI R20, 0
+00001c 2e74      MOV DecIncrementAuxReg2, R20
+                 
+                 ;TEMP REGISTERS TO COMPARE DECADE COUNTER WITH
+00001d ee48      LDI R20, LOW(1000)
+00001e 2e84      MOV DecCounterCompL, R20
+00001f e043      LDI R20, HIGH(1000)
+000020 2e94      MOV DecCounterCompH, R20
+                 
+                 mainloop:
                      /*0*/
-000012 930f          PUSH R16
-000013 2d02          MOV R16, DIGIT_0
-000014 d039          RCALL DigitTo7segCode
-000015 bb02          DISPLAY_DIGIT R16
-000016 934f
-000017 e042
-000018 bb48
-000019 914f          SET_SEGMENT R20, $02
-00001a 910f          POP R16
-00001b d01f          RCALL DelayInMs
+000021 930f
+000022 2d02
+000023 d053
+000024 bb02
+000025 e000
+000026 d060
+000027 934f
+000028 2f40
+000029 bb48
+00002a 914f
+00002b 910f
+00002c d037          SET_DIGIT 0
                  
                      /*1*/
-00001c 930f          PUSH R16
-00001d 2d03          MOV R16, DIGIT_1
-00001e d02f          RCALL DigitTo7segCode
-00001f bb02          DISPLAY_DIGIT R16
-000020 934f
-000021 e044
-000022 bb48
-000023 914f          SET_SEGMENT R20, $04
-000024 910f          POP R16
-000025 d015          RCALL DelayInMs
+00002d 930f
+00002e 2d03
+00002f d047
+000030 bb02
+000031 e001
+000032 d054
+000033 934f
+000034 2f40
+000035 bb48
+000036 914f
+000037 910f
+000038 d02b          SET_DIGIT 1
                  
                      /*2*/
-000026 930f          PUSH R16
-000027 2d04          MOV R16, DIGIT_2
-000028 d025          RCALL DigitTo7segCode
-000029 bb02          DISPLAY_DIGIT R16
-00002a 934f
-00002b e048
-00002c bb48
-00002d 914f      	SET_SEGMENT R20, $08
-00002e 910f          POP R16
-00002f d00b      	RCALL DelayInMs
+000039 930f
+00003a 2d04
+00003b d03b
+00003c bb02
+00003d e002
+00003e d048
+00003f 934f
+000040 2f40
+000041 bb48
+000042 914f
+000043 910f
+000044 d01f          SET_DIGIT 2
                  
                      /*3*/
-000030 930f          PUSH R16
-000031 2d05          MOV R16, DIGIT_3
-000032 d01b          RCALL DigitTo7segCode
-000033 bb02          DISPLAY_DIGIT R16
-000034 934f
-000035 e140
-000036 bb48
-000037 914f      	SET_SEGMENT R20, $10
-000038 910f          POP R16
-000039 d001      	RCALL DelayInMs
+000045 930f
+000046 2d05
+000047 d02f
+000048 bb02
+000049 e003
+00004a d03c
+00004b 934f
+00004c 2f40
+00004d bb48
+00004e 914f
+00004f 910f
+000050 d013          SET_DIGIT 3
                  
-00003a cfd7          RJMP main
+                     /*MOD 1000 COUNTER*/
+000051 0c06          ADD PulseEdgeCtrL, DecIncrementAuxReg1
+000052 1c17          ADC PulseEdgeCtrH, DecIncrementAuxReg2
+                     
+000053 1408          CP PulseEdgeCtrL, DecCounterCompL
+000054 0419          CPC PulseEdgeCtrH, DecCounterCompH
+000055 f411          BRNE update_display
+000056 2400          CLR PulseEdgeCtrL
+000057 2411          CLR PulseEdgeCtrH
                  
+                 update_display:
+000058 930f          PUSH R16
+000059 931f          PUSH R17
+00005a 2d00          MOV R16, PulseEdgeCtrL
+00005b 2d11          MOV R17, PulseEdgeCtrH
+00005c d037          RCALL NumberToDigits
+00005d 911f          POP R17
+00005e 910f          POP R16 
+                 
+                     ;COPY RESULT OF EXTRACTING DIGITS TO DISPLAY REGISTERS
+00005f 2e26          MOV DIGIT_0, Dig0
+000060 2e37          MOV DIGIT_1, Dig1
+000061 2e48          MOV DIGIT_2, Dig2
+000062 2e59          MOV DIGIT_3, Dig3
+                 
+000063 cfbd          RJMP mainloop
+                 ///////////////////////////////////////////////////////////
+                 /*                     SUBROUTINES                       */
+                 ///////////////////////////////////////////////////////////
                  /***COUNT DELAY***/
                  DelayInMs:
-00003b 939f               PUSH R25
-00003c 938f               PUSH R24 
-00003d 2f80               MOV R24, R16
-00003e 2f91               MOV R25, R17
-                 mainloop:
-00003f 939f               PUSH R25
-000040 938f               PUSH R24																								
-000041 d007               RCALL DelayOneMs         
-000042 918f               POP R24
-000043 919f               POP R25
-000044 9701               SBIW R25:R24, 1
-000045 f7c9               BRNE mainloop
-000046 918f               POP R24
-000047 919f               POP R25
-000048 9508               RET
+000064 939f               PUSH R25
+000065 938f               PUSH R24 
+000066 2f80               MOV R24, R16
+000067 2f91               MOV R25, R17
+                 delayloop:
+000068 939f               PUSH R25
+000069 938f               PUSH R24																								
+00006a d007               RCALL DelayOneMs         
+00006b 918f               POP R24
+00006c 919f               POP R25
+00006d 9701               SBIW R25:R24, 1
+00006e f7c9               BRNE delayloop
+00006f 918f               POP R24
+000070 919f               POP R25
+000071 9508               RET
                  
                  DelayOneMs:
-000049 ec89               LDI R24, $C9    
-00004a e097               LDI R25, $07
+000072 ec89               LDI R24, $C9    
+000073 e097               LDI R25, $07
                  inloop:  
-00004b 9701               SBIW R25:R24, 1  
-00004c f7f0               BRCC inloop 
-00004d 9508               RET
+000074 9701               SBIW R25:R24, 1  
+000075 f7f0               BRCC inloop 
+000076 9508               RET
                  
                  /***ENCODE 7 SEG DIGITS***/
                  DigitTo7segCode:
-00004e 93ef          PUSH R30
-00004f 93ff          PUSH R31
+000077 93ef          PUSH R30
+000078 93ff          PUSH R31
                  
                      /*SET THE POINTER AT THE BEGINING OF TABLE*/
-000050 e0f0          LDI R31, HIGH(digit_code<<1)
-000051 ebe2          LDI R30, LOW(digit_code<<1)
+000079 e0f1          LDI R31, HIGH(digit_code<<1)
+00007a e0e4          LDI R30, LOW(digit_code<<1)
                  
-000052 0fe0          ADD R30, R16 
-000053 f408          BRCC inc_skip
-000054 95f3          INC R31
-                 inc_skip:
-000055 9104          LPM R16, Z
+00007b 0fe0          ADD R30, R16 
+00007c f408          BRCC inc_skip1
+00007d 95f3          INC R31
+                 inc_skip1:
+00007e 9104          LPM R16, Z
                  
-000056 91ff          POP R31
-000057 91ef          POP R30
-000058 9508          RET
+00007f 91ff          POP R31
+000080 91ef          POP R30
+000081 9508          RET
                  
                  /*DIGITS CODE TABLE*/
                  digit_code:
-000059 063f
-00005a 4f5b
-00005b 6d66
-00005c 077d
+000082 063f
+000083 4f5b
+000084 6d66
+000085 077d
+000086 6f7f          .db $3F, $06, $5B, $4F, $66, $6D, $7D, $07, $7F, $6F
+                 
+                 /***DISPLAY SEGMENT CODE***/
+                 GetSegmentCode:
+000087 93ef          PUSH R30
+000088 93ff          PUSH R31
+                 
+                     /*SET THE POINTER AT THE BEGINING OF TABLE*/
+000089 e0f1          LDI R31, HIGH(segment_code<<1)
+00008a e2e4          LDI R30, LOW(segment_code<<1)
+                 
+00008b 0fe0          ADD R30, R16 
+00008c f408          BRCC inc_skip2
+00008d 95f3          INC R31
+                 inc_skip2:
+00008e 9104          LPM R16, Z
+                 
+00008f 91ff          POP R31
+000090 91ef          POP R30
+000091 9508          RET
+                 /*SEGMNET CODE TABLE*/
+                 segment_code:
+000092 0402
+000093 1008          .db $02, $04, $08, $10
+                 
+                 /***EXTRACT DIGITS FROM NUMBER ROUTINE***/
+                 NumberToDigits:
+                 ;LOAD DIVISOR FOR NUMBER OF THOUSANDS
+000094 ee28          LDI R18, LOW(1000)
+000095 e033          LDI R19, HIGH(1000)
+                 ;DIVIDER SUBROUTINE CALL FOR EXTRACT NUMBER OF THOUSANDS
+000096 d00b          RCALL Divider
+000097 2f92          MOV Dig3, QL
+                 
+                 ;SAME ROUTINE FOR HOUNDREDS...
+000098 e624          LDI R18, LOW(100)
+000099 e030          LDI R19, HIGH(100)
+                 
+00009a d007          RCALL Divider
+00009b 2f82          MOV Dig2, QL
+                 
+                 ;SAME ROUTINE FOR TENS...
+00009c e02a          LDI R18, LOW(10)
+00009d e030          LDI R19, HIGH(10)
+                 
+00009e d003          RCALL Divider
+00009f 2f72          MOV Dig1, QL
+                 
+                 ;COPY UNITS TO Dig0
+0000a0 2f60          MOV Dig0, RL
+0000a1 9508          RET
+                 
+                 /***DIVIDER SUBROUTINE***/
+                 Divider:
+0000a2 938f          PUSH QCtrL
+0000a3 939f          PUSH QCtrH
+                 ;WRITE INITIAL VALUE (0) TO TEMPORARY QUOTATION REGISTERS
+0000a4 2788          CLR QCtrL
+0000a5 2799          CLR QCtrH
+                 loop:
+                 ;COMPARE DIVIDEND TO DIVISOR. DONE TILL YH:YL (DIVISOR) > XH:XL (DIVIDENT) => C=1
+0000a6 1702          CP XL, YL
+0000a7 0713          CPC XH, YH
+0000a8 f020          BRCS end
+                 ;IF FALSE (C=0) SUBTRACT NUMBERS
+0000a9 1b02          SUB XL, YL
+0000aa 0b13          SBC XH, YH
+                 ;INCREMENT INTERNAL COUNTER RESPONSIBLE FOR QUOTIENT
+0000ab 9601          ADIW QCtrH:QCtrL, 1
+0000ac cff9          RJMP loop
+                 
+                 end:
+                 ;COPY QUOTIENT FROM INTERNAL COUNTER(R25:R24)
+0000ad 2f28          MOV QL, QCtrL
+0000ae 2f39          MOV QH, QCtrH
+                 
+0000af 919f          POP QCtrH
+0000b0 918f          POP QCtrL
 
 
 RESOURCE USE INFORMATION
@@ -847,39 +1048,39 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATtiny2313" register use summary:
-r0 :   0 r1 :   0 r2 :   2 r3 :   2 r4 :   2 r5 :   2 r6 :   0 r7 :   0 
-r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 r13:   0 r14:   0 r15:   0 
-r16:  20 r17:   2 r18:   0 r19:   0 r20:  32 r21:   0 r22:   0 r23:   0 
-r24:   8 r25:   8 r26:   0 r27:   0 r28:   0 r29:   0 r30:   4 r31:   4 
-x  :   0 y  :   0 z  :   1 
-Registers used: 12 out of 35 (34.3%)
+r0 :   4 r1 :   4 r2 :   3 r3 :   3 r4 :   3 r5 :   3 r6 :   2 r7 :   2 
+r8 :   2 r9 :   2 r10:   1 r11:   0 r12:   0 r13:   0 r14:   0 r15:   0 
+r16:  36 r17:   7 r18:   9 r19:   6 r20:  40 r21:   0 r22:   2 r23:   2 
+r24:  15 r25:  15 r26:   0 r27:   0 r28:   0 r29:   0 r30:   8 r31:   8 
+x  :   0 y  :   0 z  :   2 
+Registers used: 23 out of 35 (65.7%)
 
 "ATtiny2313" instruction use summary:
-.lds  :   0 .sts  :   0 adc   :   0 add   :   1 adiw  :   0 and   :   0 
+.lds  :   0 .sts  :   0 adc   :   1 add   :   3 adiw  :   1 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   2 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
+brcc  :   3 brcs  :   1 break :   0 breq  :   0 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :   1 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brne  :   2 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 cbi   :   0 cbr   :   0 clc   :   0 
-clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 clt   :   0 
-clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 cpi   :   0 
+clh   :   0 cli   :   0 cln   :   0 clr   :   4 cls   :   0 clt   :   0 
+clv   :   0 clz   :   0 com   :   0 cp    :   2 cpc   :   2 cpi   :   0 
 cpse  :   0 dec   :   0 eor   :   0 icall :   0 ijmp  :   0 in    :   0 
-inc   :   1 ld    :   0 ldd   :   0 ldi   :  16 lds   :   0 lpm   :   2 
-lsl   :   0 lsr   :   0 mov   :  10 movw  :   0 neg   :   0 nop   :   0 
-or    :   0 ori   :   0 out   :  10 pop   :  16 push  :  16 rcall :   9 
-ret   :   3 reti  :   0 rjmp  :   1 rol   :   0 ror   :   0 sbc   :   0 
+inc   :   3 ld    :   0 ldd   :   0 ldi   :  28 lds   :   0 lpm   :   4 
+lsl   :   0 lsr   :   0 mov   :  30 movw  :   0 neg   :   0 nop   :   0 
+or    :   0 ori   :   0 out   :  10 pop   :  22 push  :  22 rcall :  17 
+ret   :   6 reti  :   1 rjmp  :   4 rol   :   0 ror   :   0 sbc   :   1 
 sbci  :   0 sbi   :   0 sbic  :   0 sbis  :   0 sbiw  :   2 sbr   :   0 
 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 sei   :   0 sen   :   0 
 ser   :   0 ses   :   0 set   :   0 sev   :   0 sez   :   0 sleep :   0 
-spm   :   0 st    :   0 std   :   0 sts   :   0 sub   :   0 subi  :   0 
+spm   :   0 st    :   0 std   :   0 sts   :   0 sub   :   1 subi  :   0 
 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 14 out of 105 (13.3%)
+Instructions used: 23 out of 105 (21.9%)
 
 "ATtiny2313" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0000bc    178     10    188    2048   9.2%
+[.cseg] 0x000000 0x000164    336     14    350    2048  17.1%
 [.dseg] 0x000060 0x000060      0      0      0     128   0.0%
 [.eseg] 0x000000 0x000000      0      0      0     128   0.0%
 
-Assembly complete, 0 errors, 0 warnings
+Assembly complete, 0 errors, 10 warnings

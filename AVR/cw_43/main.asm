@@ -1,0 +1,80 @@
+/*** NumberToDigits ***/
+/*PROGRAM EXTRACTS FROM NUMBER 0-9999 AMOUNT OF THOUSANDS, HOUNDREDS, TENS AND UNITS*/
+;input : Number: R16-17
+;output: Digits: R16-19
+;internals: X_R,Y_R,Q_R,R_R - see _Divide
+; internals
+.def Dig0=R22 ; Digits temps
+.def Dig1=R23 ;
+.def Dig2=R24 ;
+.def Dig3=R25 ;
+;DEFINITIONS FOR DIVIDER SUBROUTINE
+.def XL=R16 ; divident
+.def XH=R17
+.def YL=R18 ; divisor
+.def YH=R19
+
+; outputs
+.def RL=R16 ; remainder
+.def RH=R17
+.def QL=R18 ; quotient
+.def QH=R19
+
+; internal
+.def QCtrL=R24
+.def QCtrH=R25
+
+
+NumberToDigits:
+;LOAD DIVISOR FOR NUMBER OF THOUSANDS
+    LDI R18, LOW(1000)
+    LDI R19, HIGH(1000)
+;DIVIDER SUBROUTINE CALL FOR EXTRACT NUMBER OF THOUSANDS
+    RCALL Divider
+    MOV Dig3, QL
+
+;SAME ROUTINE FOR HOUNDREDS...
+    LDI R18, LOW(100)
+    LDI R19, HIGH(100)
+
+    RCALL Divider
+    MOV Dig2, QL
+
+;SAME ROUTINE FOR TENS...
+    LDI R18, LOW(10)
+    LDI R19, HIGH(10)
+
+    RCALL Divider
+    MOV Dig1, QL
+
+;COPY UNITS TO Dig0
+    MOV Dig0, RL
+    RET
+
+/*DIVIDER SUBROUTINE*/
+Divider:
+    PUSH QCtrL
+    PUSH QCtrH
+
+    CLR QCtrL
+    CLR QCtrH
+loop:
+;COMPARE DIVIDEND TO DIVISOR. DONE TILL YH:YL (DIVISOR) > XH:XL (DIVIDENT) => C=1
+    CP XL, YL
+    CPC XH, YH
+    BRCS end
+;IF FALSE (C=0) SUBTRACT NUMBERS
+    SUB XL, YL
+    SBC XH, YH
+;INCREMENT INTERNAL COUNTER RESPONSIBLE FOR QUOTIENT
+    ADIW QCtrH:QCtrL, 1
+    RJMP loop
+
+end:
+;COPY QUOTIENT FROM INTERNAL COUNTER(R25:R24)
+    MOV QL, QCtrL
+    MOV QH, QCtrH
+
+    POP QCtrH
+    POP QCtrL
+    RET

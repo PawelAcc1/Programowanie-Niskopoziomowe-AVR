@@ -1,0 +1,37 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.57</VERSION>
+ <DEVICE>"ATtiny2313"</DEVICE>
+ <WORKING_DIR>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_41\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.1175\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_41\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.1175\avrassembler\Include\tn2313def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_41\Debug/cw_41.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>cw_41.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>cw_41.map</FILE>
+  <FILE>cw_41.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <main><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_41\main.asm</FILE><LINE>77</LINE></main>
+  <DigitTo7segCode><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_41\main.asm</FILE><LINE>140</LINE></DigitTo7segCode>
+  <GetSegmentCode><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_41\main.asm</FILE><LINE>163</LINE></GetSegmentCode>
+  <DelayInMs><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_41\main.asm</FILE><LINE>114</LINE></DelayInMs>
+  <skip_reg_clr><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_41\main.asm</FILE><LINE>110</LINE></skip_reg_clr>
+  <mainloop><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_41\main.asm</FILE><LINE>119</LINE></mainloop>
+  <DelayOneMs><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_41\main.asm</FILE><LINE>131</LINE></DelayOneMs>
+  <inloop><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_41\main.asm</FILE><LINE>134</LINE></inloop>
+  <digit_code><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_41\main.asm</FILE><LINE>159</LINE></digit_code>
+  <inc_skip1><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_41\main.asm</FILE><LINE>151</LINE></inc_skip1>
+  <segment_code><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_41\main.asm</FILE><LINE>181</LINE></segment_code>
+  <inc_skip2><FILE>C:\Users\pbuko\Desktop\agh\pn\avr\Programowanie-Niskopoziomowe-AVR\AVR\cw_41\main.asm</FILE><LINE>174</LINE></inc_skip2>
+ </LABELS>
+</ASSEMBLER_INFO>
